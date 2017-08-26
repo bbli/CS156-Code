@@ -1,9 +1,11 @@
 import numpy as np
 import random as rand
 import PerceptonSetup as P
+import pdb
+import pickle
 
-m=1.1169698503730756
-b=-0.05137064645286335
+with open("mypickle.pickle", "rb") as f:
+    b,m,x_list,y_list,output_list=pickle.load(f)
 
 
 ########################################
@@ -62,6 +64,7 @@ def vec_to_lin(weight_vector):
     return line
 #########################################################################
 
+
 def PLA(inital_weight_vector, datapoints):
     '''This function returns the final weight vector. The points should be in tuple form inside a list, like (x1,x2,y1)
     '''
@@ -70,7 +73,7 @@ def PLA(inital_weight_vector, datapoints):
     weight_vector=inital_weight_vector
     converge = False
     counter=0  ###To get the average number of iterations
-    print(weight_vector[0]) ## Testing my theory that the constant doesn't change that much
+    #print(weight_vector[0]) ## Testing my theory that the constant doesn't change that much
     while converge == False:
         counter=counter+1
         converge = True
@@ -81,14 +84,26 @@ def PLA(inital_weight_vector, datapoints):
             else:
                 converge = False
                 weight_vector=adjust(weight_vector,x,y,z)
-                print(weight_vector[0]) ## Testing my theory...etc
+                #print(weight_vector[0]) ## Testing my theory...etc
                 break
-    #x_sample_points, y_sample_points =P.random_points(8000)
-    #final_weight_line=vec_to_lin(weight_vector)
-    #final_vec_classified_list=list_classifier(x_sample_points,y_sample_points,final_weight_line)
-    #target_classified_list=list_classifier(x_sample_points,y_sample_points,lambda x: m*x+b)
-    #matching_list=(final_vec_classified_list==target_classified_list)
-    #probability_of_mismatch=1-np.sum(matching_list)/matching_list.size
-    return weight_vector,counter#,probability_of_mismatch
+    return weight_vector,counter
 
     ## Remember to profile your code
+
+def Probability(weight_vector):
+    '''
+    This function returns the probability_of_mismatch
+    '''
+    x_intermediate, y_intermediate=P.random_points(8000)
+    x_sample_points = np.array(x_intermediate)
+    y_sample_points = np.array(y_intermediate)
+    final_weight_line=vec_to_lin(weight_vector)
+    final_vec_classified_list=list_classifier(x_sample_points,y_sample_points,final_weight_line)
+    target_classified_list=list_classifier(x_sample_points,y_sample_points,lambda x: m*x+b)
+    #pdb.set_trace()
+    matching_list=(final_vec_classified_list==target_classified_list)
+    sum_matching_list=np.sum(matching_list)
+    probability_of_mismatch=1-sum_matching_list/matching_list.size
+    return probability_of_mismatch
+
+
