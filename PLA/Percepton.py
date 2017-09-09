@@ -4,8 +4,9 @@ import PerceptonSetup as P
 import pdb
 import pickle
 
-with open("mypickle.pickle", "rb") as f:
-    b,m,x_list,y_list,output_list=pickle.load(f)
+if __name__ == '__main__':
+    with open("mypickle.pickle", "rb") as f:
+        b,m,x_list,y_list,output_list=pickle.load(f)
 
 
 ########################################
@@ -66,7 +67,7 @@ def vec_to_lin(weight_vector):
 
 
 def PLA(inital_weight_vector, datapoints):
-    '''This function returns the final weight vector. The points should be in tuple form inside a list, like (x1,x2,y1)
+    '''This function returns the final weight vector and number of iterations. The points should be in tuple form inside a list, like (x1,x2,y1)
     '''
     shuffled_list=datapoints
     rand.shuffle(shuffled_list)
@@ -90,7 +91,7 @@ def PLA(inital_weight_vector, datapoints):
 
     ## Remember to profile your code
 
-def Probability(weight_vector):
+def Probability(weight_vector,m,b):
     '''
     This function returns the probability_of_mismatch
     '''

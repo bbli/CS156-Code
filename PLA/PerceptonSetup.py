@@ -13,7 +13,7 @@ def random_points(number_of_points):
     return x_list, y_list
 #######################################################################
 
-### This may be a problem if I call this more than once!!!!
+### This may be a problem if I call this more than once!!!! Make seperate Jupyter Notebook
 def random_line():
     '''
     This function creates a random line function y(x)
